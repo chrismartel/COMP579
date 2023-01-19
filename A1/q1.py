@@ -1,13 +1,22 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from bandit_algorithms import BernoulliSimulator
+import argparse
 
 def main():
-    np.random.seed(0)
+
+    parser = argparse.ArgumentParser(description='Assignment 1 - Q1')
+    parser.add_argument("-t", "--n_trials", type=int, help="number of trials per experiment", default=1000)
+    args = parser.parse_args()
+
+    n_trials = args.n_trials
+
+    # k-arm bandit parameters
     K = 3
-    delta = 0.1
-    p = [0.5, 0.5 - delta, 0.5 - 2*delta]
-    n_trials = 50
+    DELTA = 0.1
+    p = [0.5, 0.5 - DELTA, 0.5 - 2*DELTA]
+
+    # Bernoulli simulation
     bernoulliSimulator = BernoulliSimulator(K, p)
     rewards = bernoulliSimulator.simulate(n_trials)
 
@@ -27,7 +36,7 @@ def main():
         axes[arm].set_ylim(0,1)
         axes[arm].legend()
     plt.suptitle("Bernoulli Simulation for a {arm}-arm Bandit".format(arm=K))
-    plt.savefig('plots/q1.png')
+    plt.savefig('plots/q1/q1.png')
 
 if __name__ == "__main__":
     main()

@@ -9,6 +9,7 @@ class BernoulliSimulator:
             k : number of arms
             p : numpy array containing the probability of success for each arm.
         '''
+        np.random.seed(1234)
         self.K = k
         self.p = p
 
@@ -38,10 +39,10 @@ class Bandit:
             k: the number of arms
             alpha: the learning rate
         '''
-        self.K = k
-        self.alpha = alpha
-        self.Q = np.zeros(k)
-        self.N = np.zeros(k)
+        self.K = k # number of arms
+        self.alpha = alpha # learning rate
+        self.Q = np.zeros(k) # action-values
+        self.N = np.zeros(k) # number of time each action is chosen
 
     def greedySelection(self, epsilon=0):
         '''
@@ -64,3 +65,7 @@ class Bandit:
     def updateAvg(self, i, R):
         self.Q[i] = self.Q[i] + (1/self.N[i]) * (R-self.Q[i])
         return self.Q[i]
+    
+    def reset(self):
+        self.Q = np.zeros(self.K)
+        self.N = np.zeros(self.K)
