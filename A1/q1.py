@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from bandit_algorithms import BernoulliSimulator
+from bernoulli_bandit import BernoulliSimulator
 import argparse
 
 def main():

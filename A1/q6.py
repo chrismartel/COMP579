@@ -6,19 +6,20 @@ import argparse
 
 def main():
 
-    parser = argparse.ArgumentParser(description='Assignment 1 - Q5')
+    parser = argparse.ArgumentParser(description='Assignment 1 - Q6')
     parser.add_argument("-t", "--n_trials", type=int, help="number of trials per experiment", default=1000)
     parser.add_argument("-e", "--n_experiments", type=int, help="number of experiments", default=100)
-    parser.add_argument("-g", "--epsilon", type=float, help="epsilon value for e-greedy algorithm", default=0.125)
     parser.add_argument("-a", "--alphas", type=str, help="alpha values to compare. Must a string be of the form [a1,a2,a3] where ais are the alpha values", default="[0.1]")
     args = parser.parse_args()
 
     n_trials = args.n_trials
     n_experiments = args.n_experiments
-    epsilon = args.epsilon
     alphas = args.alphas
 
     alphas = [float(alpha) for alpha in args.alphas.lstrip('[').rstrip(']').split(',')]
+
+    #UCB parameters
+    C = 2
     
     # k-arm bandit parameters
     K = 3
@@ -55,7 +56,7 @@ def main():
             rewards = bernoulliSimulator.simulate(n_trials)
 
             for trial in range(n_trials):
-                arm = bandit.greedySelection(epsilon=epsilon)
+                arm = bandit.ucbSelection(c=C)
                 instant_reward_received[update_method, exp, trial] = rewards[arm,trial]
                 average_reward_received[update_method, exp, trial] = np.mean(instant_reward_received[update_method, exp][0:trial+1])
 
@@ -102,9 +103,9 @@ def main():
     axes[3].set_ylabel('Total Regret')
     axes[3].set_title('Total Regret Up to Timestep t')
     axes[3].legend()
-    fig.suptitle("Performance of E-Greedy Algorithm | epsilon = {epsilon}".format(epsilon=epsilon))
+    fig.suptitle("Performance of UCB Selection Algorithm | c = {c}".format(c=C))
     
-    plt.savefig("plots/q5/q5_epsilon={epsilon}.png".format(epsilon=epsilon))
+    plt.savefig("plots/q6/q6.png")
 
 if __name__ == "__main__":
     main()

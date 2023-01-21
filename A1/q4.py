@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from bandit_algorithms import BernoulliSimulator
-from bandit_algorithms import Bandit
+from bernoulli_bandit import BernoulliSimulator
+from bernoulli_bandit import BernoulliBandit
 import argparse
 
 def main():
@@ -43,7 +43,7 @@ def main():
     # the total regret up to timestep t for each experiment
     total_regret = np.zeros((len(epsilons), n_experiments, n_trials))
 
-    bandit = Bandit(k=K)
+    bandit = BernoulliBandit(k=K)
 
     for epsilon in range(len(epsilons)):
         for exp in range(n_experiments):
@@ -55,7 +55,6 @@ def main():
                 instant_reward_received[epsilon, exp, trial] = rewards[arm,trial]
                 average_reward_received[epsilon, exp, trial] = np.mean(instant_reward_received[epsilon, exp][0:trial+1])
 
-                bandit.N[arm] += 1
                 bandit.updateAvg(arm, instant_reward_received[epsilon, exp, trial])
 
                 best_action_indices = np.argwhere(p == np.max(p))
