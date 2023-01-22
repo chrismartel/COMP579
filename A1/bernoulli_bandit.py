@@ -12,14 +12,14 @@ class BernoulliSimulator:
         '''
         np.random.seed(1234)
         self.K = k
-        self.p = p   
+        self.p = p 
 
-    def sample(self, i):
+    def sample(self, arm):
         '''
             Run a bernoulli trial for an arm. Returns 1 if the trial is
             successfull, 0 otherwise.
         '''
-        return np.random.binomial(1,self.p[i],1)
+        return np.random.binomial(1,self.p[arm],1)
 
     def simulate(self, n):
         '''
@@ -27,9 +27,9 @@ class BernoulliSimulator:
         '''
         rewards = np.zeros((self.K,n))
 
-        for i in range(self.K):
-            for j in range(n):
-                rewards[i,j] = self.sample(i)
+        for arm in range(self.K):
+            for trial in range(n):
+                rewards[arm,trial] = self.sample(arm)
 
         return rewards
 

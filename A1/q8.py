@@ -6,7 +6,7 @@ import argparse
 
 def main():
 
-    parser = argparse.ArgumentParser(description='Assignment 1 - Q7')
+    parser = argparse.ArgumentParser(description='Assignment 1 - Q8')
     parser.add_argument("-t", "--n_trials", type=int, help="number of trials per experiment", default=1000)
     parser.add_argument("-e", "--n_experiments", type=int, help="number of experiments", default=100)
     args = parser.parse_args()
